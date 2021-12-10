@@ -55,7 +55,7 @@ function addTodoButton(name,idx){
         const dueDate=window.prompt("Enter due date: ");
         const priority=window.prompt("Enter priority: ");
         projectLibrary[idx].todos.push(new Todo(title,description,dueDate,priority));
-        addTodo(title,description,dueDate,priority,idx);
+        addTodo(title,description,dueDate,priority,projectLibrary[idx].todos.length-1,idx);
     });
 }
 
