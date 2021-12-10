@@ -19,20 +19,20 @@ function addProjectButton(name){
     btn.addEventListener("click",()=>{
         const name=window.prompt("Enter name: ");
         projectLibrary.push(new Project(name));
-        addProject(name);
+        addProject(name,projectLibrary.length-1);
     });
 }
 
-function addProject(name){
+function addProject(name,id){
     const div=document.createElement("div");
     div.classList.add("project");
     div.textContent=name;
-    div.id=projectLibrary.length-1;
+    div.id=id;
     container.appendChild(div);
 
-    div.addEventListener("click",function(e){
+    div.addEventListener("click",()=>{
         clearPage();
-        printNotes(e.target.id);
+        printNotes(id);
     });
 }
 
@@ -54,10 +54,9 @@ function addTodoButton(name,idx){
         const description=window.prompt("Enter description: ");
         const dueDate=window.prompt("Enter due date: ");
         const priority=window.prompt("Enter priority: ");
+        projectLibrary[idx].todos.push(new Todo(title,description,dueDate,priority));
         addTodo(title,description,dueDate,priority,idx);
     });
-
-    addReturnButton("Return");
 }
 
 function addReturnButton(name){
@@ -72,14 +71,12 @@ function addReturnButton(name){
     });
 }
 
-function addTodo(title,description,dueDate,priority,idx){
+function addTodo(title,description,dueDate,priority,id,idx){
     const div=document.createElement("div");
     div.classList.add("todo");
     div.textContent=title;
-    div.id=projectLibrary[idx].todos.length;
+    div.id=id
     container.appendChild(div);
-
-    projectLibrary[idx].todos.push(new Todo(title,description,dueDate,priority));
 }
 
 function clearPage(){
@@ -90,22 +87,24 @@ function clearPage(){
 function printHome(){
     addProjectButton("New Project");
     for(let i=0;i<projectLibrary.length;i++){
-        addProject(projectLibrary[i].name);
+        addProject(projectLibrary[i].name,i);
     }
 }
 
 function printNotes(idx){
-    console.log(idx);
+    console.log("idx: "+idx);
     addTodoButton("New Note",idx);
-    // for(let i=0;i<projectLibrary[idx].todos.length;i++){
-    //     addTodo(projectLibrary[idx].todos[i].title,
-    //         projectLibrary[idx].todos[i].description,
-    //         projectLibrary[idx].todos[i].dueDate,
-    //         projectLibrary[idx].todos[i].priority,
-    //         idx);
-    // }
+    addReturnButton("Return");
+    for(let i=0;i<projectLibrary[idx].todos.length;i++){
+        addTodo(projectLibrary[idx].todos[i].title,
+            projectLibrary[idx].todos[i].description,
+            projectLibrary[idx].todos[i].dueDate,
+            projectLibrary[idx].todos[i].priority,
+            i,
+            idx);
+    }
 }
 
 // init
-if(projectLibrary.length===0) projectLibrary.push(new Project("Default"));
+if(projectLibrary.length===0) projectLibrary.push(new Project("Default",0));
 printHome();
