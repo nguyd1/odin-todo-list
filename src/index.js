@@ -74,7 +74,7 @@ function addReturnButton(name){
 function addTodo(title,description,dueDate,priority,id,idx){
     const div=document.createElement("div");
     div.classList.add("todo");
-    div.textContent=title;
+    div.textContent=title+" "+dueDate;
     div.id=id
     container.appendChild(div);
 }
@@ -92,7 +92,6 @@ function printHome(){
 }
 
 function printNotes(idx){
-    console.log("idx: "+idx);
     addTodoButton("New Note",idx);
     addReturnButton("Return");
     for(let i=0;i<projectLibrary[idx].todos.length;i++){
