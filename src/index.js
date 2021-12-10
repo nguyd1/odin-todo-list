@@ -2,6 +2,7 @@ import './style.css';
 
 const container=document.querySelector(".container");
 const header=document.querySelector(".header");
+const body=document.querySelector("body");
 
 let projectLibrary=[];
 
@@ -53,9 +54,9 @@ function addTodoButton(name,idx){
         const title=window.prompt("Enter title: ");
         const description=window.prompt("Enter description: ");
         const dueDate=window.prompt("Enter due date: ");
-        const priority=window.prompt("Enter priority: ");
+        const priority=window.prompt("Enter priority (color): ");
         projectLibrary[idx].todos.push(new Todo(title,description,dueDate,priority));
-        addTodo(title,description,dueDate,priority,projectLibrary[idx].todos.length-1,idx);
+        addTodo(title,description,dueDate,priority,projectLibrary[idx].todos.length-1);
     });
 }
 
@@ -71,12 +72,27 @@ function addReturnButton(name){
     });
 }
 
-function addTodo(title,description,dueDate,priority,id,idx){
+function addTodo(title,description,dueDate,priority,id){
     const div=document.createElement("div");
     div.classList.add("todo");
-    div.textContent=title+" "+dueDate;
     div.id=id
+    div.style.backgroundColor=priority;
     container.appendChild(div);
+
+    const h1=document.createElement("h1");
+    h1.textContent="Title: "+title;
+    div.appendChild(h1);
+
+    const h2=document.createElement("h2");
+    h2.textContent="Due date: "+dueDate;
+    div.appendChild(h2);
+
+    const h3=document.createElement("h3");
+    div.appendChild(h3);
+
+    div.addEventListener("click",()=>{
+        h3.textContent="Descrption: "+description;
+    });
 }
 
 function clearPage(){
@@ -85,6 +101,8 @@ function clearPage(){
 }
 
 function printHome(){
+    body.style.backgroundColor="lightblue";
+
     addProjectButton("New Project");
     for(let i=0;i<projectLibrary.length;i++){
         addProject(projectLibrary[i].name,i);
@@ -92,6 +110,8 @@ function printHome(){
 }
 
 function printNotes(idx){
+    body.style.backgroundColor="lightgreen";
+
     addTodoButton("New Note",idx);
     addReturnButton("Return");
     for(let i=0;i<projectLibrary[idx].todos.length;i++){
@@ -99,8 +119,7 @@ function printNotes(idx){
             projectLibrary[idx].todos[i].description,
             projectLibrary[idx].todos[i].dueDate,
             projectLibrary[idx].todos[i].priority,
-            i,
-            idx);
+            i);
     }
 }
 
