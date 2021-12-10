@@ -15,7 +15,7 @@ body {
     gap: 1rem;
 }
 
-.project {
+.project, .todo {
     border: 4px solid black;
     width: 100px;
     text-align: center;
