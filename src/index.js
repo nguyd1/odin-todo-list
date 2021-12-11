@@ -27,13 +27,28 @@ function addProjectButton(name){
 function addProject(name,id){
     const div=document.createElement("div");
     div.classList.add("project");
-    div.textContent=name;
     div.id=id;
     container.appendChild(div);
+
+    const h1=document.createElement("h1");
+    h1.textContent=name;
+    div.appendChild(h1);
+
+    const btn=document.createElement("button");
+    btn.classList.add("removeProject");
+    btn.textContent="Remove";
+    div.appendChild(btn);
 
     div.addEventListener("click",()=>{
         clearPage();
         printNotes(id);
+    });
+
+    btn.addEventListener("click",function(e){
+        e.stopPropagation();
+        projectLibrary.splice(id,1);
+        clearPage();
+        printHome();
     });
 }
 
@@ -91,7 +106,7 @@ function addTodo(title,description,dueDate,priority,id,idx){
     div.appendChild(h3);
 
     const btn=document.createElement("button");
-    btn.classList.add("remove");
+    btn.classList.add("removeTodo");
     btn.textContent="Remove";
     div.appendChild(btn);
 
@@ -99,9 +114,8 @@ function addTodo(title,description,dueDate,priority,id,idx){
         h3.textContent=!h3.textContent?"Description: "+description:"";
     });
 
-    btn.addEventListener("click",()=>{
-        console.log("idx: "+idx);
-        console.log("id: "+id);
+    btn.addEventListener("click",function(e){
+        e.stopPropagation();
         projectLibrary[idx].todos.splice(id,1);
         clearPage();
         printNotes(idx);
