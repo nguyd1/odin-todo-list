@@ -20,6 +20,7 @@ function addProjectButton(name){
     btn.addEventListener("click",()=>{
         const name=window.prompt("Enter name: ");
         projectLibrary.push(new Project(name));
+        setData();
         addProject(name,projectLibrary.length-1);
     });
 }
@@ -47,6 +48,7 @@ function addProject(name,id){
     btn.addEventListener("click",function(e){
         e.stopPropagation();
         projectLibrary.splice(id,1);
+        setData();
         clearPage();
         printHome();
     });
@@ -71,6 +73,7 @@ function addTodoButton(name,idx){
         const dueDate=window.prompt("Enter due date: ");
         const priority=window.prompt("Enter priority (color): ");
         projectLibrary[idx].todos.push(new Todo(title,description,dueDate,priority));
+        setData();
         addTodo(title,description,dueDate,priority,projectLibrary[idx].todos.length-1,idx);
     });
 }
@@ -117,6 +120,7 @@ function addTodo(title,description,dueDate,priority,id,idx){
     btn.addEventListener("click",function(e){
         e.stopPropagation();
         projectLibrary[idx].todos.splice(id,1);
+        setData();
         clearPage();
         printNotes(idx);
     });
@@ -151,6 +155,11 @@ function printNotes(idx){
     }
 }
 
+// localStorage
+const setData=()=>localStorage.setItem("library",JSON.stringify(projectLibrary));
+
+projectLibrary=JSON.parse(localStorage.getItem("library"));
+
 // init
-if(projectLibrary.length===0) projectLibrary.push(new Project("Default",0));
+if(!projectLibrary) projectLibrary=[], projectLibrary.push(new Project("Default",0));
 printHome();
