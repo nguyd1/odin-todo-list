@@ -4,7 +4,7 @@ body {
 
 .header {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 .container {
@@ -36,4 +36,17 @@ body {
 h1, h2, h3 {
     margin: 0;
     overflow: hidden;
+}
+
+button {
+    font-weight: bold;
+    background-color: orange;
+    border-radius: 1rem;
+    padding: 0.5rem 2rem;
+    border: 2px solid orangered;
+}
+
+.removeProject, .removeTodo {
+    background-color: wheat;
+    padding: 0.25rem 1rem;
 }
