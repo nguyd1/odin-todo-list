@@ -161,5 +161,8 @@ const setData=()=>localStorage.setItem("library",JSON.stringify(projectLibrary))
 projectLibrary=JSON.parse(localStorage.getItem("library"));
 
 // init
-if(!projectLibrary) projectLibrary=[], projectLibrary.push(new Project("Default",0));
+if(!projectLibrary){
+    projectLibrary=[];
+    projectLibrary.push(new Project("Default",0));
+}
 printHome();
