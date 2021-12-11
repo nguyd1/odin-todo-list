@@ -56,7 +56,7 @@ function addTodoButton(name,idx){
         const dueDate=window.prompt("Enter due date: ");
         const priority=window.prompt("Enter priority (color): ");
         projectLibrary[idx].todos.push(new Todo(title,description,dueDate,priority));
-        addTodo(title,description,dueDate,priority,projectLibrary[idx].todos.length-1);
+        addTodo(title,description,dueDate,priority,projectLibrary[idx].todos.length-1,idx);
     });
 }
 
@@ -72,7 +72,7 @@ function addReturnButton(name){
     });
 }
 
-function addTodo(title,description,dueDate,priority,id){
+function addTodo(title,description,dueDate,priority,id,idx){
     const div=document.createElement("div");
     div.classList.add("todo");
     div.id=id
@@ -90,8 +90,21 @@ function addTodo(title,description,dueDate,priority,id){
     const h3=document.createElement("h3");
     div.appendChild(h3);
 
+    const btn=document.createElement("button");
+    btn.classList.add("remove");
+    btn.textContent="Remove";
+    div.appendChild(btn);
+
     div.addEventListener("click",()=>{
-        h3.textContent="Descrption: "+description;
+        h3.textContent=!h3.textContent?"Description: "+description:"";
+    });
+
+    btn.addEventListener("click",()=>{
+        console.log("idx: "+idx);
+        console.log("id: "+id);
+        projectLibrary[idx].todos.splice(id,1);
+        clearPage();
+        printNotes(idx);
     });
 }
 
@@ -119,7 +132,8 @@ function printNotes(idx){
             projectLibrary[idx].todos[i].description,
             projectLibrary[idx].todos[i].dueDate,
             projectLibrary[idx].todos[i].priority,
-            i);
+            i,
+            idx);
     }
 }
 
